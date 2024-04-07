@@ -15,7 +15,7 @@
     "commands": [
       {
         "command": "lavague-test.initDocument",
-        "title": "Create a new LaVague project"
+        "title": "LaVague: New project"
       }
     ]
   },

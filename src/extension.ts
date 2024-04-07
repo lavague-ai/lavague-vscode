@@ -2,8 +2,9 @@ import { NotebookCellData, NotebookData, NotebookEditor, Position } from 'vscode
 import * as vscode from 'vscode';
 import * as http from 'http';
 
-var edit: vscode.TextEditor;
-var editArr: vscode.TextEditor[] = [];
+let edit: vscode.TextEditor;
+let expected_name: string = "";
+let editArr: vscode.TextEditor[] = [];
 
 const driverCode: string = `from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -22,9 +23,9 @@ homedir = os.path.expanduser("~")
 chrome_options.binary_location = f"{homedir}/chrome-linux64/chrome"
 webdriver_service = Service(f"{homedir}/chromedriver-linux64/chromedriver")
 
-lavague.driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)
-lavague.driver.get("")
-driver = lavague.driver`
+driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)
+driver.get("")
+lavague.driver = driver`
 
 const requestListener: http.RequestListener = (req, res) => {
     const fullUrl = new URL(req.url || '', `http://${req.headers.host}`);
@@ -78,36 +79,42 @@ function getActiveNotebookCell() {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+    let editorChangeDisposable = vscode.window.onDidChangeActiveTextEditor(editor => {
+        if (editor) {
+            if (expected_name == editor.document.fileName) {
+                editArr = [];
+                vscode.window.visibleTextEditors.forEach((element) => {
+                    console.log(element.document.fileName)
+                    if (element.document.fileName == expected_name) {
+                        editArr.push(element);
+                        if (element.document.getText().length < 1) {
+                            console.log("found cell");
+                            edit = element;
+                        }
+                    }
+                }
+                );
+            }
+        }
+    });
+
 	let disposable = vscode.commands.registerCommand('lavague-test.initDocument', async () => {
-        const cell1 = new NotebookCellData(vscode.NotebookCellKind.Code, 'import os\nos.environ["OPENAI_API_KEY"] = ""', "python")
+        // const cell1 = new NotebookCellData(vscode.NotebookCellKind.Markup, "DRIVER", "")
         const cell2 = new NotebookCellData(vscode.NotebookCellKind.Code, driverCode, "python")
         const cell3 = new NotebookCellData(vscode.NotebookCellKind.Code, "%lavague_exec your_prompt", "python")
         const cell4 = new NotebookCellData(vscode.NotebookCellKind.Code, "", "python")
         var cells: NotebookCellData[];
-        cells = [cell1, cell2, cell3, cell4];
+        cells = [cell2, cell3, cell4];
         const notebook_data = new NotebookData(cells)
         const document = await vscode.workspace.openNotebookDocument(
             "jupyter-notebook",
             notebook_data
         );
+        expected_name = document.uri.path
         const editor = await vscode.window.showNotebookDocument(document, {
             viewColumn: vscode.ViewColumn.One,
             preserveFocus: false
         });
-        console.log(vscode.window.activeTextEditor);
-        while(vscode.window.activeTextEditor?.document.fileName != document.uri.path);
-        editArr = [];
-        vscode.window.visibleTextEditors.forEach((element) => {
-            if (element.document.fileName == document.uri.path) {
-                editArr.push(element);
-                console.log(element.document.getText().length)
-                if (element.document.getText().trim().length < 1) {
-                    edit = element;
-                }
-            }
-        }
-        );
-        console.log(edit);
 	})
 
 	context.subscriptions.push(disposable);
