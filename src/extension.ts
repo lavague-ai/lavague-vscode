@@ -1,8 +1,8 @@
-import { NotebookCellData, NotebookData, NotebookEditor, Position } from 'vscode';
+import { NotebookCellData, NotebookData, NotebookEditor, Position, Range } from 'vscode';
 import * as vscode from 'vscode';
 import * as http from 'http';
 
-let edit: vscode.TextEditor;
+let edit: vscode.TextEditor | undefined;
 let expected_name: string = "";
 let editArr: vscode.TextEditor[] = [];
 
@@ -39,20 +39,28 @@ const requestListener: http.RequestListener = (req, res) => {
             chunks.push(chunk);
         });
 
-        // 'end' event is emitted after all data is received
         req.on('end', () => {
-            // Combine all chunks to get the complete request body
             const body = Buffer.concat(chunks).toString();
             console.log(body)
             try {
                 // Parse the JSON data
                 const jsonData = JSON.parse(body);
-				edit.edit((editBuilder) => {
-					editBuilder.insert(new Position(edit.document.lineCount, 0), jsonData.data);
-				})
-				.then(noop, noop);
+                if (edit != undefined) {
+                    edit.edit((editBuilder) => {
+                        const wholeDoc = new Range(
+                            edit!.document.positionAt(0),
+                            edit!.document.positionAt(edit!.document.getText().length)
+                        );
+                        editBuilder.delete(wholeDoc)
+                        editBuilder.insert(new Position(edit!.document.lineCount, 0), jsonData.data);
+                    })
+                    .then(noop, noop);
+                }
+                else {
+                    vscode.window.showErrorMessage("You don't have any empty cell in your notebook, the generated code can't be inserted.")
+                }
 				res.writeHead(200, { 'Content-Type': 'text/plain' });
-				res.end('Hello, this is the main page!');
+				res.end('');
             } catch (e) {
 				res.writeHead(400, { 'Content-Type': 'text/plain' });
 				res.end('');
@@ -60,7 +68,7 @@ const requestListener: http.RequestListener = (req, res) => {
         });
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('Page not found.');
+        res.end('');
     }
 };
 
@@ -83,6 +91,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (editor) {
             if (expected_name == editor.document.fileName) {
                 editArr = [];
+                edit = undefined;
                 vscode.window.visibleTextEditors.forEach((element) => {
                     console.log(element.document.fileName)
                     if (element.document.fileName == expected_name) {
