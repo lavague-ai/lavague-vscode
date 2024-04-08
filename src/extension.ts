@@ -31,10 +31,8 @@ const requestListener: http.RequestListener = (req, res) => {
     const fullUrl = new URL(req.url || '', `http://${req.headers.host}`);
 
     if (fullUrl.pathname === '/push' && req.method === 'POST') {
-        // Initialize an array to hold the chunks of data
         const chunks: Uint8Array[] = [];
 
-        // Listen for 'data' event to receive data chunks
         req.on('data', (chunk) => {
             chunks.push(chunk);
         });
@@ -43,7 +41,6 @@ const requestListener: http.RequestListener = (req, res) => {
             const body = Buffer.concat(chunks).toString();
             console.log(body)
             try {
-                // Parse the JSON data
                 const jsonData = JSON.parse(body);
                 if (edit != undefined) {
                     edit.edit((editBuilder) => {
