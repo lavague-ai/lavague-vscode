@@ -59,7 +59,7 @@ Your automation code will populate the next cell.
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/instruction-and-code.png?raw=true" alt="generated code">
 
 By running this cell, we can now see the result of our automation code in our VSCode browser window:
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/ret.png?raw=true" alt="updated browser">
+<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/new-screen.png?raw=true" alt="updated browser" width=70%>
 
 
 ### Further tips
