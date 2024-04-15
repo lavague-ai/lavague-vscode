@@ -1,13 +1,13 @@
 <div align="center">
   <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/logo.png" width=140px: alt="LaVague Logo">
-  <h1>Welcome to the LaVague VsCode Extension</h1>
+  <h1>Welcome to the LaVague VSCode Extension</h1>
   <p>🪄 Copilot for automating automation</p>
 <h1></h1>
 </div>
 
 ## 🌊 What is LaVague?
 
-The LaVague VsCode extension is an **open-source** project designed to automate automation for devs! 
+The LaVague VSCode extension is an **open-source** project designed to automate automation for devs! 
 
 It enables you to leverage AI to turn your **natural language instructions** into Python code for automation leveraging **Selenium**.
 
@@ -15,11 +15,11 @@ Behind the scenes, we use **advanced AI techniques** (RAG, Few-shot learning, Ch
 
 ## 🔧 Pre-requisites
 
-To use our VsCode extension you will need:
+To use our VSCode extension you will need:
 
-- A version of VsCode >= 1.80
+- A version of VSCode >= 1.80
 
-- The Jupyter notebooks VsCode extension
+- The Jupyter notebooks VSCode extension
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/jupter-extension.png?raw=true" alt="Jupyter extension" width=75%>
 
 - You will also need to install the chrome webdriver & LaVague. You can do this by running our `setup.sh` LaVague installation script [available here](https://github.com/lavague-ai/LaVague)
@@ -39,7 +39,7 @@ Let's now take a look at how to get started with the LaVague VSCode extension.
 - Type or search and find the 'LaVague: New project' command
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/command-2.png?raw=true" alt="open new project" width=60%>
 
-This will open a new LaVague Jupyter notebook file in VsCode with some pre-filled cells of code.
+This will open a new LaVague Jupyter notebook file in VSCode with some pre-filled cells of code.
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/window-1.png?raw=true" alt="initial browser"  width=75%>
 
 
