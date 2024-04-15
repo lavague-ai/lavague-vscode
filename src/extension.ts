@@ -15,16 +15,23 @@ import lavague
 import os.path
 
 chrome_options = Options()
-chrome_options.add_argument("--headless")  # Ensure GUI is off
+
+# Turns off GUI
+# chrome_options.add_argument("--headless")
+
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--window-size=1600,900")
 
 homedir = os.path.expanduser("~")
+
+# Paths for your chrome and chromedriver binaries
 chrome_options.binary_location = f"{homedir}/chrome-linux64/chrome"
 webdriver_service = Service(f"{homedir}/chromedriver-linux64/chromedriver")
 
 driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)
-driver.get("")
+
+# Add your target URL as a string argument in the command below
+driver.get([YOUR_TARGET_URL])
 lavague.driver = driver`
 
 const requestListener: http.RequestListener = (req, res) => {
