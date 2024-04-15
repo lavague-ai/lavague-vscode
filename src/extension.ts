@@ -39,7 +39,6 @@ const requestListener: http.RequestListener = (req, res) => {
 
         req.on('end', () => {
             const body = Buffer.concat(chunks).toString();
-            console.log(body)
             try {
                 const jsonData = JSON.parse(body);
                 if (edit != undefined) {
@@ -90,11 +89,9 @@ export function activate(context: vscode.ExtensionContext) {
                 editArr = [];
                 edit = undefined;
                 vscode.window.visibleTextEditors.forEach((element) => {
-                    console.log(element.document.fileName)
                     if (element.document.fileName == expected_name) {
                         editArr.push(element);
                         if (element.document.getText().length < 1) {
-                            console.log("found cell");
                             edit = element;
                         }
                     }
@@ -104,7 +101,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-	let disposable = vscode.commands.registerCommand('lavague-test.initDocument', async () => {
+	let disposable = vscode.commands.registerCommand('lavague.initDocument', async () => {
         // const cell1 = new NotebookCellData(vscode.NotebookCellKind.Markup, "DRIVER", "")
         const cell2 = new NotebookCellData(vscode.NotebookCellKind.Code, driverCode, "python")
         const cell3 = new NotebookCellData(vscode.NotebookCellKind.Code, "%lavague_exec your_prompt", "python")

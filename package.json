@@ -1,8 +1,9 @@
 {
-  "name": "lavague-test",
-  "displayName": "lavague_test",
+  "name": "lavague",
+  "displayName": "lavague",
   "description": "",
   "version": "0.0.1",
+  "repository": "https://github.com/lavague-ai/lavague-vscode.git",
   "engines": {
     "vscode": "^1.87.0"
   },
@@ -14,7 +15,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "lavague-test.initDocument",
+        "command": "lavague.initDocument",
         "title": "LaVague: New project"
       }
     ]
@@ -31,7 +32,10 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch"
   },
   "dependencies": {
     "@jupyterlab/services": "^7.0.5",
@@ -42,19 +46,20 @@
     "process": "^0.11.10",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.5"
-},
+  },
   "devDependencies": {
-    "@types/vscode": "^1.87.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
+    "@types/vscode": "^1.87.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
-    "eslint": "^8.56.0",
-    "typescript": "^5.3.3",
-    "ts-loader": "^9.5.1",
-    "webpack": "^5.90.3",
-    "webpack-cli": "^5.1.4",
     "@vscode/test-cli": "^0.0.6",
-    "@vscode/test-electron": "^2.3.9"
+    "@vscode/test-electron": "^2.3.9",
+    "esbuild": "^0.20.2",
+    "eslint": "^8.56.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
   }
 }
