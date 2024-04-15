@@ -41,13 +41,13 @@ Let's now take a look at how to get started with the LaVague VSCode extension.
 
 This will open a new LaVague Jupyter notebook file in VsCode with some pre-filled cells of code.
 
+
 ### Adding your URL and instruction
 
 You can add the URL you wish to generate automation code for in the first cell block.
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/add-url.png?raw=true" alt="modify URL">
 
-If we now run this first block of code, we can see a new VSCode window opens displaying our target site:
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/window-1.png?raw=true" alt="open-browser-window" width=50%>
+If we now run this first block of code, we can see a new VSCode window opens displaying our target site.
 
 We're now ready to add an instruction for the action we'd like to automate:
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/instruction.png?raw=true" alt="add instruction">
@@ -58,8 +58,11 @@ We're now ready to add an instruction for the action we'd like to automate:
 Your automation code will populate the next cell.
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/instruction-and-code.png?raw=true" alt="generated code">
 
-By running this cell, we can now see the result of our automation code:
+By running this cell, we can now see the result of our automation code in our VSCode browser window:
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/ret.png?raw=true" alt="updated browser">
+
+
+### Further tips
 
 > Note, it is possible to include a sequence of actions in one instruction as follows:
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/double-instructions.png?raw=true" alt="chain of instructions">
