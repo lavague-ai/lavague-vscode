@@ -63,12 +63,13 @@ By running this cell, we can now see the result of our automation code in our VS
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/new-screen.png?raw=true" alt="updated browser" width=75%>
 
 
-### Further tips
+### Tips
 
-> Note, it is possible to include a sequence of actions in one instruction as follows:
-```%lavague_exec "click on the files and versions tab, then scroll down to the bottom of the page"```
+Note, it is possible to include a sequence of actions in one instruction as follows:
 
-⚠️ Note the extension always expects the cell following the cell with our `%lavague_exec` command to be empty so it can populate it with the generated automation code. 
+`%lavague_exec "click on the files and versions tab, then scroll down to the bottom of the page"`
+
+⚠️ Also note the extension always expects the cell following the cell with our `%lavague_exec` command to be empty so it can populate it with the generated automation code. 
 
 If you don't have an empty cell, you will see the following error:
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/empty-cell-warning.png?raw=true" alt="empty cell warning" width=75%>
