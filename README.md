@@ -37,7 +37,7 @@ Let's now take a look at how to get started with the LaVague VSCode extension.
 - Now, you can open your first LaVague project. You can do this by opening the VSCode Command Palette with Ctrl+Shift+P
 
 - Type or search and find the 'LaVague: New project' command
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/command-2.png?raw=true" alt="open new project" width=75%>
+<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/command-2.png?raw=true" alt="open new project" width=60%>
 
 This will open a new LaVague Jupyter notebook file in VsCode with some pre-filled cells of code.
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/window-1.png?raw=true" alt="initial browser"  width=75%>
@@ -46,20 +46,28 @@ This will open a new LaVague Jupyter notebook file in VsCode with some pre-fille
 ### Adding your URL and instruction
 
 You can add the URL you wish to generate automation code for in the first cell block.
+
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/add-url.png?raw=true" alt="modify URL" width=75%>
 
 If we now run this first block of code, we can see a new VSCode window opens displaying our target site.
 
 We're now ready to add an instruction for the action we'd like to automate:
+
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/instruction.png?raw=true" alt="add instruction" width=75%>
 
 > Note you will need to have an OpenAI API key set in your notebook environment. If you don't have yours set in this environment, you can add the following code into a cell:
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/add-key.png?raw=true" alt="set API key" width=75%>
+
+  ```
+  import os
+  os.environ['OPENAI_API_Key'] = ''
+  ```
 
 Your automation code will populate the next cell.
+
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/instruction-and-code.png?raw=true" alt="generated code" width=75%>
 
 By running this cell, we can now see the result of our automation code in our VSCode browser window:
+
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/new-screen.png?raw=true" alt="updated browser" width=75%>
 
 ### Tips
@@ -71,7 +79,8 @@ Note, it is possible to include a sequence of actions in one instruction as foll
 ⚠️ Also note the extension always expects the cell following the cell with our `%lavague_exec` command to be empty so it can populate it with the generated automation code. 
 
 If you don't have an empty cell, you will see the following error:
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/empty-cell-warning.png?raw=true" alt="empty cell warning" width=75%>
+
+<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/empty-cell-warning.png?raw=true" alt="empty cell warning" width=60%>
 
 Therefore, to run a new command now, we can move the previous generated code above our `%lavague_exec` command:
 
