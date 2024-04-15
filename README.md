@@ -62,7 +62,6 @@ Your automation code will populate the next cell.
 By running this cell, we can now see the result of our automation code in our VSCode browser window:
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/new-screen.png?raw=true" alt="updated browser" width=75%>
 
-
 ### Tips
 
 Note, it is possible to include a sequence of actions in one instruction as follows:
@@ -75,6 +74,7 @@ If you don't have an empty cell, you will see the following error:
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/empty-cell-warning.png?raw=true" alt="empty cell warning" width=75%>
 
 Therefore, to run a new command now, we can move the previous generated code above our `%lavague_exec` command:
+
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/move-old-code-up.png?raw=true" alt="layout" width=75%>
 
 ## 🙋 Get support
