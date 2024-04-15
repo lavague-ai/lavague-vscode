@@ -81,6 +81,7 @@ server.listen(port, () => {
 	console.log(`Server is running on http://localhost:${port}`);
 });
 
+let prev_name = ""
 
 function noop() {} 
 
@@ -92,19 +93,26 @@ function getActiveNotebookCell() {
 export function activate(context: vscode.ExtensionContext) {
     let editorChangeDisposable = vscode.window.onDidChangeActiveTextEditor(editor => {
         if (editor) {
-            if (expected_name == editor.document.fileName) {
                 editArr = [];
                 edit = undefined;
+                let found_magic = false;
+                console.log(vscode.window.visibleTextEditors.length)
                 vscode.window.visibleTextEditors.forEach((element) => {
-                    if (element.document.fileName == expected_name) {
-                        editArr.push(element);
-                        if (element.document.getText().length < 1) {
-                            edit = element;
-                        }
+                    console.log(element)
+                    editArr.push(element);
+                    if (element.document.getText().trim().length < 1) {
+                        console.log("found cell?")
+                        edit = element;
+                    }
+                    else if (element.document.getText().startsWith("%lavague_exec")) {
+                        console.log("found magic command")
+                        found_magic = true;
                     }
                 }
                 );
-            }
+                if (!found_magic) {
+                    edit = undefined;
+                }
         }
     });
 
@@ -112,7 +120,7 @@ export function activate(context: vscode.ExtensionContext) {
         // const cell1 = new NotebookCellData(vscode.NotebookCellKind.Markup, "DRIVER", "")
         const cell2 = new NotebookCellData(vscode.NotebookCellKind.Code, driverCode, "python")
         const cell3 = new NotebookCellData(vscode.NotebookCellKind.Code, "%lavague_exec your_prompt", "python")
-        const cell4 = new NotebookCellData(vscode.NotebookCellKind.Code, "", "python")
+        let cell4 = new NotebookCellData(vscode.NotebookCellKind.Code, "", "python")
         var cells: NotebookCellData[];
         cells = [cell2, cell3, cell4];
         const notebook_data = new NotebookData(cells)
