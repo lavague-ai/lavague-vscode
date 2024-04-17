@@ -1,16 +1,28 @@
 import { NotebookCellData, NotebookData, NotebookEditor, Position, Range } from 'vscode';
 import * as vscode from 'vscode';
 import * as http from 'http';
+import {Mutex, MutexInterface, Semaphore, SemaphoreInterface, withTimeout} from 'async-mutex';
+
 
 let edit: vscode.TextEditor | undefined;
 let expected_name: string = "";
 let editArr: vscode.TextEditor[] = [];
+
+let first = false;
+let txt = ""
+let target: vscode.TextEditor | undefined = undefined;
+let over = false;
+let endPosition = undefined
+let doc: vscode.TextDocument
+
+const mutex = new Mutex();
 
 const driverCode: string = `from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from lavague import vscode_extension
 import lavague
 import os.path
 
@@ -32,42 +44,70 @@ driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)
 
 # Add your target URL as a string argument in the command below
 driver.get([YOUR_TARGET_URL])
-lavague.driver = driver`
+lavague.vscode_extension.driver = driver`
+
+function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
 
 const requestListener: http.RequestListener = (req, res) => {
     const fullUrl = new URL(req.url || '', `http://${req.headers.host}`);
 
     if (fullUrl.pathname === '/push' && req.method === 'POST') {
         const chunks: Uint8Array[] = [];
-
-        req.on('data', (chunk) => {
-            chunks.push(chunk);
-        });
-
-        req.on('end', () => {
-            const body = Buffer.concat(chunks).toString();
-            try {
-                const jsonData = JSON.parse(body);
-                if (edit != undefined) {
-                    edit.edit((editBuilder) => {
-                        const wholeDoc = new Range(
-                            edit!.document.positionAt(0),
-                            edit!.document.positionAt(edit!.document.getText().length)
-                        );
+        
+        req.on('data', async (chunk) => {
+            await mutex.runExclusive(async () => {
+                const data = chunk.toString()
+                const jsonData = JSON.parse(data);
+                if (jsonData.over == true) {
+                    const wholeDoc = new Range(
+                        edit!.document.positionAt(0),
+                        edit!.document.positionAt(edit!.document.getText().length)
+                    );
+                    const ret = await target!.edit(async (editBuilder) => {
                         editBuilder.delete(wholeDoc)
-                        editBuilder.insert(new Position(edit!.document.lineCount, 0), jsonData.data);
+                        endPosition = target!.document.lineAt(target!.document.lineCount - 1).range.end;
+                        console.log(jsonData.full_code)
+                        editBuilder.insert(endPosition!, jsonData.full_code);
                     })
-                    .then(noop, noop);
+                    over = true;
                 }
                 else {
-                    vscode.window.showErrorMessage("You don't have any empty cell in your notebook, the generated code can't be inserted.")
+                    if (target == undefined) {
+                        target = edit;
+                    }
+                    if (target != undefined) {
+                        const ret = await target.edit(async (editBuilder) => {
+                            if (!first) {
+                                const wholeDoc = new Range(
+                                    doc.positionAt(0),
+                                    doc.positionAt(doc.getText().length)
+                                );
+                                editBuilder.delete(wholeDoc)
+                                first = true;
+                            }
+                            endPosition = doc.lineAt(target!.document.lineCount - 1).range.end;
+                            editBuilder.insert(endPosition!, jsonData.data);
+                        })
+                    }
+                    chunks.push(chunk);
                 }
-				res.writeHead(200, { 'Content-Type': 'text/plain' });
-				res.end('');
-            } catch (e) {
-				res.writeHead(400, { 'Content-Type': 'text/plain' });
-				res.end('');
-            }
+            });
+        });
+
+        req.on('end', async () => {
+            await mutex.runExclusive(async () => {
+                if (over) {
+                    over = false;
+                    console.log("stop")
+                    first = false;
+                    target = undefined;
+                    txt = "";
+                }
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('');
+        })
         });
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -98,20 +138,26 @@ export function activate(context: vscode.ExtensionContext) {
                 let found_magic = false;
                 console.log(vscode.window.visibleTextEditors.length)
                 vscode.window.visibleTextEditors.forEach((element) => {
-                    console.log(element)
-                    editArr.push(element);
-                    if (element.document.getText().trim().length < 1) {
-                        console.log("found cell?")
-                        edit = element;
-                    }
-                    else if (element.document.getText().startsWith("%lavague_exec")) {
-                        console.log("found magic command")
-                        found_magic = true;
+                    if (element!.document.fileName == expected_name) {
+                        console.log(element)
+                        editArr.push(element);
+                        if (element.document.getText().trim().length < 1) {
+                            console.log("found cell?")
+                            edit = element;
+                        }
+                        else if (element.document.getText().startsWith("%lavague_exec")) {
+                            console.log("found magic command")
+                            found_magic = true;
+                        }
                     }
                 }
                 );
                 if (!found_magic) {
                     edit = undefined;
+                }
+                else if (edit != undefined) {
+                    console.log(edit.document)
+                    doc = edit.document
                 }
         }
     });
