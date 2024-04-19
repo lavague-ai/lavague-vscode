@@ -27,7 +27,7 @@ To use our VSCode extension you will need:
 
   - A version of VSCode >= 1.80
   - The Jupyter notebooks VSCode extension
-  - To install a webdriver & LaVague: You can install them with the following command: `wget https://raw.githubusercontent.com/lavague-ai/LaVague/main/setup.sh &&sudo bash setup.sh`
+  - To install a webdriver & LaVague: You can install them with the following command: `wget https://raw.githubusercontent.com/lavague-ai/LaVague/main/setup.sh && sudo bash setup.sh`
 
   See the LaVague installation instructions [for more details](https://docs.lavague.ai/en/latest/docs/get-started/setting-up-la-vague/)!
 
