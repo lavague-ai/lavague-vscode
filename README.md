@@ -49,9 +49,7 @@ Now, you can open your first LaVague project:
 - Next you'll be asked to input the URL of the site you wish to perform web actions on.
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/URL.webp?raw=true" alt="add project URL" width=60%>
 
-This will open a new LaVague project.
-
-### Adding your URL and instruction
+### Running your instruction
 
 We're now ready to add an instruction for the action we'd like to automate following the `%lavague-exec` magic command:
 
