@@ -62,7 +62,7 @@ We're now ready to add an instruction for the action we'd like to automate follo
   os.environ['OPENAI_API_Key'] = ''
   ```
 
-Your automation code will populate the next cell.
+If we now run this cell, our automation code will populate the next cell.
 
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/instruction-and-code.png?raw=true" alt="generated code" width=75%>
 
