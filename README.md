@@ -13,6 +13,14 @@ It enables you to leverage AI to turn your **natural language instructions** int
 
 Behind the scenes, we use **advanced AI techniques** (RAG, Few-shot learning, Chain of Thought) to enhance performance - check out [our documentation to find out more](https://docs.lavague.ai/en/latest/)!
 
+### LaVague VSCode Extension in Action
+
+Check out what the LaVague VSCode Extension looks like in action:
+
+<div>
+    <img src="https://raw.githubusercontent.com/lavague-ai/lavague/main/docs/assets/vscode-demo.gif" alt="LaVague VSCode Extension Example" style="margin-left: 0px;">
+</div>
+
 ## 🔧 Pre-requisites
 
 To use our VSCode extension you will need:
@@ -32,26 +40,25 @@ Let's now take a look at how to get started with the LaVague VSCode extension.
 
 ### Opening a new project
 
-- Firstly, you'll need to download the `LaVague` extension from VSCode marketplace.
+Firstly, you'll need to download the [LaVague extension from VSCode marketplace](https://marketplace.visualstudio.com/items?itemName=LaVagueAI.lavague).
 
-- Now, you can open your first LaVague project. You can do this by opening the VSCode Command Palette with Ctrl+Shift+P
+Now, you can open your first LaVague project:
+
+- Open the VSCode Command Palette with Ctrl+Shift+P
 
 - Type or search and find the 'LaVague: New project' command
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/command-2.png?raw=true" alt="open new project" width=60%>
 
-This will open a new LaVague Jupyter notebook file in VSCode with some pre-filled cells of code.
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/window-1.png?raw=true" alt="initial browser"  width=75%>
+- Next you'll be asked to input the URL of the site you wish to perform web actions on.
+<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/URL.webp?raw=true" alt="add project URL" width=60%>
 
+This will open a new LaVague project.
 
 ### Adding your URL and instruction
 
-You can add the URL you wish to generate automation code for in the first cell block.
+We're now ready to add an instruction for the action we'd like to automate following the `%lavague-exec` magic command:
 
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/add-url.png?raw=true" alt="modify URL" width=75%>
-
-If we now run this first block of code, we can see a new VSCode window opens displaying our target site.
-
-We're now ready to add an instruction for the action we'd like to automate:
+<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/instruction.png?raw=true" alt="add instruction" width=75%>
 
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/instruction.png?raw=true" alt="add instruction" width=75%>
 
@@ -65,26 +72,6 @@ We're now ready to add an instruction for the action we'd like to automate:
 Your automation code will populate the next cell.
 
 <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/instruction-and-code.png?raw=true" alt="generated code" width=75%>
-
-By running this cell, we can now see the result of our automation code in our VSCode browser window:
-
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/new-screen.png?raw=true" alt="updated browser" width=75%>
-
-### Tips
-
-Note, it is possible to include a sequence of actions in one instruction as follows:
-
-`%lavague_exec "click on the files and versions tab, then scroll down to the bottom of the page"`
-
-⚠️ Also note the extension always expects the cell following the cell with our `%lavague_exec` command to be empty so it can populate it with the generated automation code. 
-
-If you don't have an empty cell, you will see the following error:
-
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/empty-cell-warning.png?raw=true" alt="empty cell warning" width=60%>
-
-Therefore, to run a new command now, we can move the previous generated code above our `%lavague_exec` command:
-
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/move-old-code-up.png?raw=true" alt="layout" width=75%>
 
 ## 🙋 Get support
 
