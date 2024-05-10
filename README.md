@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/logo.png" width=140px: alt="LaVague Logo">
+  <img src="https://github.com/lavague-ai/lavague-vscode/blob/master/vscode-assets/logo.png" width=140px: alt="LaVague Logo">
   <h1>Welcome to the LaVague VSCode Extension</h1>
   <p>🪄 Copilot for automating automation</p>
 <h1></h1>
@@ -44,16 +44,16 @@ Now, you can open your first LaVague project:
 - Open the VSCode Command Palette with Ctrl+Shift+P
 
 - Type or search and find the 'LaVague: New project' command
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/command-2.png?raw=true" alt="open new project" width=60%>
+<img src="https://github.com/lavague-ai/lavague-vscode/blob/master/vscode-assets/command-2.png?raw=true" alt="open new project" width=60%>
 
 - Next you'll be asked to input the URL of the site you wish to perform web actions on.
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/URL.webp?raw=true" alt="add project URL" width=60%>
+<img src="https://github.com/lavague-ai/lavague-vscode/blob/master/vscode-assets/URL.webp?raw=true" alt="add project URL" width=60%>
 
 ### Running your instruction
 
 We're now ready to add an instruction for the action we'd like to automate following the `%lavague-exec` magic command:
 
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/instruction.png?raw=true" alt="add instruction" width=75%>
+<img src="https://github.com/lavague-ai/lavague-vscode/blob/master/vscode-assets/instruction.png?raw=true" alt="add instruction" width=75%>
 
 > Note you will need to have an OpenAI API key set in your notebook environment. If you don't have yours set in this environment, you can add the following code into a cell:
 
@@ -64,7 +64,7 @@ We're now ready to add an instruction for the action we'd like to automate follo
 
 If we now run this cell, our automation code will populate the next cell.
 
-<img src="https://github.com/lavague-ai/lavague/blob/main/vscode-assets/instruction-and-code.png?raw=true" alt="generated code" width=75%>
+<img src="https://github.com/lavague-ai/lavague-vscode/blob/master/vscode-assets/instruction-and-code.png?raw=true" alt="generated code" width=75%>
 
 ## 🙋 Get support
 
